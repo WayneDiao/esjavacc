@@ -1,3 +1,5 @@
 
 /.idea/
 /esjavacc.iml
+.idea/*
+esjavacc.iml

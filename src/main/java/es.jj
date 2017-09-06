@@ -14,9 +14,11 @@ public class Adder{
             adder.start(esManager,System.out);
             }catch(Exception e){
               System.out.println("input error");
+               e.printStackTrace();
               continue;
             }catch(TokenMgrError e){
               System.out.println("input error,please try again!");
+               e.printStackTrace();
               continue;
             }
         }
@@ -35,26 +37,13 @@ TOKEN : { < CLOSE_PAR : ")" > }
 TOKEN : { < CHARACTER : ["a"-"z","A"-"Z", "_"] (["a"-"z","A"-"Z","0"-"9","_"])* > }
 TOKEN : { < COLON : ":" > }
 TOKEN : { < END : ";" > }
-TOKEN : { <  STRING : "\""
-             ( ( ~["\"","\\","\n","\r"])
-             | ("\\" (
-                       ["n","t","v","b","r","f","a","\\","?","'","\""]
-                      |
-                       "0" (["0"-"7"])*
-                      |
-                       ["1"-"9"] (["0"-"9"])*
-                      |
-                       ("0x" | "0X") (["0"-"9","a"-"f","A"-"F"])+
-                     )
-               )
-             )*
-             "\"" > }
+TOKEN : { < STRING : (["a"-"z","A"-"Z","0"-"9","_","\u4E00"-"\u9FA5"])+ > }
 
 void start(EsManager esManager,PrintStream printStream) : {}
 {
     (
         previousValue = Result() <END>
-        { printStream.println(esManager.query("{\"query\":"+previousValue+"}")) ; }
+        { printStream.println(previousValue);printStream.println(esManager.query("{\"query\":"+previousValue+"}")) ; }
     )*
 }
 

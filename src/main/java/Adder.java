@@ -12,9 +12,11 @@ public class Adder implements AdderConstants {
             adder.start(esManager,System.out);
             }catch(Exception e){
               System.out.println("input error");
+               e.printStackTrace();
               continue;
             }catch(TokenMgrError e){
               System.out.println("input error,please try again!");
+               e.printStackTrace();
               continue;
             }
         }
@@ -37,7 +39,7 @@ public class Adder implements AdderConstants {
       }
       previousValue = Result();
       jj_consume_token(END);
-printStream.println(esManager.query("{\u005c"query\u005c":"+previousValue+"}")) ;
+printStream.println(previousValue);printStream.println(esManager.query("{\u005c"query\u005c":"+previousValue+"}")) ;
     }
   }
 
