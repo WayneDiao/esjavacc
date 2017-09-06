@@ -41,7 +41,7 @@ PARSER_END(Es)
 SKIP:  { " " | "\t" | "\n" | "\r" }
 TOKEN :{ "(" | ")"}
 TOKEN [IGNORE_CASE]: { <AND: "and"> | <OR: "or"> }
-TOKEN: { <#OP1: "="> | <#OP2: "!="> | <#OP3: ":"> | <#OP4: "<>"> | <#OP5: ">"> | <#OP6: "<"> |<#OP7:"<=">}
+TOKEN: { <#OP1: "="> | <#OP2: "!="> | <#OP3: ":"> | <#OP4: ">="> | <#OP5: ">"> | <#OP6: "<"> |<#OP7:"<=">}
 TOKEN: {<OP: <OP1> | <OP2> | <OP3> | <OP4> | <OP5> | <OP6> | <OP7>>
        |
        <KEYSTRING: (["a"-"z","A"-"Z"])+>
