@@ -14,11 +14,9 @@ public class Adder{
             adder.start(esManager,System.out);
             }catch(Exception e){
               System.out.println("input error");
-               e.printStackTrace();
               continue;
             }catch(TokenMgrError e){
               System.out.println("input error,please try again!");
-               e.printStackTrace();
               continue;
             }
         }
@@ -32,18 +30,23 @@ TOKEN : { < AND : "and" > }
 TOKEN : { < OR : "or" > }
 TOKEN : { < EQUAL : "=" > }
 TOKEN : { < NOT : "<>" > }
+TOKEN : { < GREATER : ">" > }
+TOKEN : { < LESS : "<" > }
 TOKEN : { < OPEN_PAR : "(" > }
 TOKEN : { < CLOSE_PAR : ")" > }
 TOKEN : { < CHARACTER : ["a"-"z","A"-"Z", "_"] (["a"-"z","A"-"Z","0"-"9","_"])* > }
-TOKEN : { < COLON : ":" > }
+TOKEN : { < COLON : "_" > }
 TOKEN : { < END : ";" > }
-TOKEN : { < STRING : (["a"-"z","A"-"Z","0"-"9","_","\u4E00"-"\u9FA5"])+ > }
+TOKEN : { < STRING : (["a"-"z","A"-"Z","0"-"9",":","+","-","\u4E00"-"\u9FA5"])+ > }
 
 void start(EsManager esManager,PrintStream printStream) : {}
 {
     (
         previousValue = Result() <END>
-        { printStream.println(previousValue);printStream.println(esManager.query("{\"query\":"+previousValue+"}")) ; }
+        {
+            printStream.println(previousValue);
+            printStream.println(esManager.query("{\"query\":"+previousValue+"}")) ;
+        }
     )*
 }
 
@@ -103,6 +106,14 @@ String Demo() : {
         <EQUAL>
         i = Primary()
         { value = "{\"bool\":{\"must\":{\"term\":" + "{ \"" + value + "\": " + "\"" + i + "\"" + " }}}}" ; }
+        |
+        <GREATER>
+        i = Primary()
+        { value = "{\"bool\":{\"must\":{\"range\":" + "{\"" + value + "\":{\"from\":\"" + i + "\"," + "\"to\":null}}}}}" ; }
+        |
+        <LESS>
+        i = Primary()
+        { value = "{\"bool\":{\"must\":{\"range\":" + "{\"" + value + "\":{\"from\":null," + "\"to\":\"" + i + "\"}}}}}" ; }
     )*
     { return value ; }
 }

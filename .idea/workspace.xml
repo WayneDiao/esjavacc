@@ -4,27 +4,14 @@
     <list default="true" id="5eba6f92-cd04-433e-98a6-78ac048ee039" name="Default" comment="版本首次提交">
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/target/classes/Adder.class" afterPath="$PROJECT_DIR$/target/classes/Adder.class" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/target/classes/AdderTokenManager.class" afterPath="$PROJECT_DIR$/target/classes/AdderTokenManager.class" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/target/classes/com/huacloud/es/Col.class" afterPath="$PROJECT_DIR$/target/classes/com/huacloud/es/Col.class" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/target/classes/com/huacloud/es/Cols.class" afterPath="$PROJECT_DIR$/target/classes/com/huacloud/es/Cols.class" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/target/classes/com/huacloud/es/impl/BoolQueryImpl.class" afterPath="$PROJECT_DIR$/target/classes/com/huacloud/es/impl/BoolQueryImpl.class" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.gitignore" afterPath="$PROJECT_DIR$/.gitignore" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/libraries/Maven__commons_codec_commons_codec_1_9.xml" afterPath="$PROJECT_DIR$/.idea/libraries/Maven__commons_codec_commons_codec_1_9.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/libraries/Maven__commons_logging_commons_logging_1_2.xml" afterPath="$PROJECT_DIR$/.idea/libraries/Maven__commons_logging_commons_logging_1_2.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/libraries/Maven__junit_junit_4_12.xml" afterPath="$PROJECT_DIR$/.idea/libraries/Maven__junit_junit_4_12.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/libraries/Maven__org_apache_commons_commons_lang3_3_6.xml" afterPath="$PROJECT_DIR$/.idea/libraries/Maven__org_apache_commons_commons_lang3_3_6.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/libraries/Maven__org_apache_httpcomponents_httpclient_4_5_3.xml" afterPath="$PROJECT_DIR$/.idea/libraries/Maven__org_apache_httpcomponents_httpclient_4_5_3.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/libraries/Maven__org_apache_httpcomponents_httpcore_4_4_6.xml" afterPath="$PROJECT_DIR$/.idea/libraries/Maven__org_apache_httpcomponents_httpcore_4_4_6.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/libraries/Maven__org_apache_logging_log4j_log4j_api_2_8_2.xml" afterPath="$PROJECT_DIR$/.idea/libraries/Maven__org_apache_logging_log4j_log4j_api_2_8_2.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/libraries/Maven__org_apache_logging_log4j_log4j_core_2_8_2.xml" afterPath="$PROJECT_DIR$/.idea/libraries/Maven__org_apache_logging_log4j_log4j_core_2_8_2.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/libraries/Maven__org_hamcrest_hamcrest_core_1_3.xml" afterPath="$PROJECT_DIR$/.idea/libraries/Maven__org_hamcrest_hamcrest_core_1_3.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/esjavacc.iml" afterPath="$PROJECT_DIR$/esjavacc.iml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/pom.xml" afterPath="$PROJECT_DIR$/pom.xml" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/target/classes/SimpleCharStream.class" afterPath="$PROJECT_DIR$/target/classes/SimpleCharStream.class" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/java/Adder.java" afterPath="$PROJECT_DIR$/src/main/java/Adder.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/java/AdderConstants.java" afterPath="$PROJECT_DIR$/src/main/java/AdderConstants.java" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/java/AdderTokenManager.java" afterPath="$PROJECT_DIR$/src/main/java/AdderTokenManager.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/java/com/huacloud/es/Col.java" afterPath="$PROJECT_DIR$/src/main/java/com/huacloud/es/Col.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/java/com/huacloud/es/Cols.java" afterPath="$PROJECT_DIR$/src/main/java/com/huacloud/es/Cols.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/java/com/huacloud/es/impl/BoolQueryImpl.java" afterPath="$PROJECT_DIR$/src/main/java/com/huacloud/es/impl/BoolQueryImpl.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/java/ParseException.java" afterPath="$PROJECT_DIR$/src/main/java/ParseException.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/java/SimpleCharStream.java" afterPath="$PROJECT_DIR$/src/main/java/SimpleCharStream.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/java/Token.java" afterPath="$PROJECT_DIR$/src/main/java/Token.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/java/TokenMgrError.java" afterPath="$PROJECT_DIR$/src/main/java/TokenMgrError.java" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/java/es.jj" afterPath="$PROJECT_DIR$/src/main/java/es.jj" />
     </list>
     <ignored path="$PROJECT_DIR$/out/" />
@@ -44,8 +31,8 @@
       <file leaf-file-name="es.jj" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/main/java/es.jj">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="0">
-              <caret line="45" column="45" lean-forward="false" selection-start-line="45" selection-start-column="10" selection-end-line="45" selection-end-column="45" />
+            <state relative-caret-position="810">
+              <caret line="45" column="9" lean-forward="false" selection-start-line="45" selection-start-column="9" selection-end-line="45" selection-end-column="9" />
               <folding />
             </state>
           </provider>
@@ -54,8 +41,8 @@
       <file leaf-file-name="EsManagerImpl.java" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/src/main/java/com/huacloud/es/impl/EsManagerImpl.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="427">
-              <caret line="115" column="41" lean-forward="true" selection-start-line="115" selection-start-column="41" selection-end-line="115" selection-end-column="41" />
+            <state relative-caret-position="432">
+              <caret line="115" column="41" lean-forward="false" selection-start-line="115" selection-start-column="41" selection-end-line="115" selection-end-column="41" />
               <folding />
             </state>
           </provider>
@@ -64,7 +51,7 @@
       <file leaf-file-name="BoolQueryImpl.java" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/main/java/com/huacloud/es/impl/BoolQueryImpl.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="576">
+            <state relative-caret-position="648">
               <caret line="41" column="40" lean-forward="false" selection-start-line="41" selection-start-column="40" selection-end-line="41" selection-end-column="40" />
               <folding>
                 <element signature="e#805#806#0" expanded="true" />
@@ -115,7 +102,7 @@
       <file leaf-file-name="Adder.java" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/main/java/Adder.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="36">
+            <state relative-caret-position="54">
               <caret line="5" column="13" lean-forward="false" selection-start-line="5" selection-start-column="13" selection-end-line="5" selection-end-column="13" />
               <folding />
             </state>
@@ -238,6 +225,8 @@
       <foldersAlwaysOnTop value="true" />
     </navigator>
     <panes>
+      <pane id="Scope" />
+      <pane id="Scratches" />
       <pane id="ProjectPane">
         <subPane>
           <expand>
@@ -249,8 +238,6 @@
           <select />
         </subPane>
       </pane>
-      <pane id="Scope" />
-      <pane id="Scratches" />
       <pane id="PackagesPane" />
     </panes>
   </component>
@@ -699,7 +686,7 @@
     <frame x="-4" y="-4" width="1928" height="1044" extended-state="6" />
     <layout>
       <window_info id="Designer" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
-      <window_info id="Project" active="true" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.2026738" sideWeight="0.49608064" order="0" side_tool="false" content_ui="combo" />
+      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.2053476" sideWeight="0.49608064" order="0" side_tool="false" content_ui="combo" />
       <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
       <window_info id="Palette&#9;" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="7" side_tool="true" content_ui="tabs" />
@@ -829,7 +816,7 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/src/main/java/Adder.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="36">
+        <state relative-caret-position="54">
           <caret line="5" column="13" lean-forward="false" selection-start-line="5" selection-start-column="13" selection-end-line="5" selection-end-column="13" />
           <folding />
         </state>
@@ -865,7 +852,7 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/src/main/java/com/huacloud/es/impl/BoolQueryImpl.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="576">
+        <state relative-caret-position="648">
           <caret line="41" column="40" lean-forward="false" selection-start-line="41" selection-start-column="40" selection-end-line="41" selection-end-column="40" />
           <folding>
             <element signature="e#805#806#0" expanded="true" />
@@ -882,8 +869,8 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/src/main/java/es.jj">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="0">
-          <caret line="45" column="45" lean-forward="false" selection-start-line="45" selection-start-column="10" selection-end-line="45" selection-end-column="45" />
+        <state relative-caret-position="810">
+          <caret line="45" column="9" lean-forward="false" selection-start-line="45" selection-start-column="9" selection-end-line="45" selection-end-column="9" />
           <folding />
         </state>
       </provider>
@@ -898,8 +885,8 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/src/main/java/com/huacloud/es/impl/EsManagerImpl.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="427">
-          <caret line="115" column="41" lean-forward="true" selection-start-line="115" selection-start-column="41" selection-end-line="115" selection-end-column="41" />
+        <state relative-caret-position="432">
+          <caret line="115" column="41" lean-forward="false" selection-start-line="115" selection-start-column="41" selection-end-line="115" selection-end-column="41" />
           <folding />
         </state>
       </provider>
