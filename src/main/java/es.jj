@@ -46,7 +46,7 @@ void start(EsManager esManager,PrintStream printStream) : {}
     (
         previousValue = Result() <END>
         {
-            printStream.println(previousValue);
+            printStream.println("{\"query\":"+previousValue+"}");
             printStream.println(esManager.query("{\"query\":"+previousValue+"}")) ;
         }
     )*

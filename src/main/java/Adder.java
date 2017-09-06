@@ -36,7 +36,7 @@ public class Adder implements AdderConstants {
       previousValue = Result();
       jj_consume_token(END);
             printStream.println(previousValue);
-            printStream.println(esManager.query("{\u005c"query\u005c":"+previousValue+"}")) ;
+            printStream.println(esManager.query("{\"query\":"+previousValue+"}")) ;
     }
   }
 
@@ -44,7 +44,7 @@ public class Adder implements AdderConstants {
     String i ;
     String value ;
     value = ORW();
-      {if (true) return "{\u005c"bool\u005c":" + value + "}" ;}
+      {if (true) return "{\"bool\":" + value + "}" ;}
     throw new Error("Missing return statement in function");
   }
 
@@ -66,7 +66,7 @@ public class Adder implements AdderConstants {
       i = Expression();
           value += "," + i ;
     }
-      {if (true) return "{\u005c"should\u005c":[" + value + "]}";}
+      {if (true) return "{\"should\":[" + value + "]}";}
     throw new Error("Missing return statement in function");
   }
 
@@ -88,7 +88,7 @@ public class Adder implements AdderConstants {
       i = Demo();
           value = value + "," + i ;
     }
-      {if (true) return "{\u005c"bool\u005c":{\u005c"must\u005c":[" + value + "]}}" ;}
+      {if (true) return "{\"bool\":{\"must\":[" + value + "]}}" ;}
     throw new Error("Missing return statement in function");
   }
 
@@ -116,37 +116,37 @@ public class Adder implements AdderConstants {
       case NOT:
         jj_consume_token(NOT);
         i = Primary();
-          value = "{\u005c"bool\u005c":{\u005c"must_not\u005c":{\u005c"term\u005c":" + "{ \u005c"" + value + "\u005c": " + "\u005c"" + i + "\u005c"" + " }}}}" ;
+          value = "{\"bool\":{\"must_not\":{\"term\":" + "{ \"" + value + "\": " + "\"" + i + "\"" + " }}}}" ;
         break;
       case COLON:
         jj_consume_token(COLON);
         i = Primary();
-          value = "{\u005c"bool\u005c":{\u005c"must\u005c":{\u005c"wildcard\u005c":" + "{ \u005c"" + value + "\u005c": " + "\u005c"" + i + "\u005c"" + " }}}}" ;
+          value = "{\"bool\":{\"must\":{\"wildcard\":" + "{ \"" + value + "\": " + "\"" + i + "\"" + " }}}}" ;
         break;
       case EQUAL:
         jj_consume_token(EQUAL);
         i = Primary();
-          value = "{\u005c"bool\u005c":{\u005c"must\u005c":{\u005c"term\u005c":" + "{ \u005c"" + value + "\u005c": " + "\u005c"" + i + "\u005c"" + " }}}}" ;
+          value = "{\"bool\":{\"must\":{\"term\":" + "{ \"" + value + "\": " + "\"" + i + "\"" + " }}}}" ;
         break;
       case GREATER:
         jj_consume_token(GREATER);
         i = Primary();
-          value = "{\u005c"bool\u005c":{\u005c"must\u005c":{\u005c"range\u005c":" + "{\u005c"" + value + "\u005c":{\u005c"from\u005c":\u005c"" + i + "\u005c"," + "\u005c"to\u005c":null,\u005c"include_lower\u005c":false,\u005c"include_upper\u005c":true,\u005c"boost\u005c":1}}}}}" ;
+          value = "{\"bool\":{\"must\":{\"range\":" + "{\"" + value + "\":{\"from\":\"" + i + "\"," + "\"to\":null,\"include_lower\":false,\"include_upper\":true,\"boost\":1}}}}}" ;
         break;
       case GREATER_EQUAL:
         jj_consume_token(GREATER_EQUAL);
         i = Primary();
-          value = "{\u005c"bool\u005c":{\u005c"must\u005c":{\u005c"range\u005c":" + "{\u005c"" + value + "\u005c":{\u005c"from\u005c":\u005c"" + i + "\u005c"," + "\u005c"to\u005c":null}}}}}" ;
+          value = "{\"bool\":{\"must\":{\"range\":" + "{\"" + value + "\":{\"from\":\"" + i + "\"," + "\"to\":null}}}}}" ;
         break;
       case LESS:
         jj_consume_token(LESS);
         i = Primary();
-          value = "{\u005c"bool\u005c":{\u005c"must\u005c":{\u005c"range\u005c":" + "{\u005c"" + value + "\u005c":{\u005c"from\u005c":null," + "\u005c"to\u005c":\u005c"" + i + "\u005c",\u005c"include_lower\u005c":true,\u005c"include_upper\u005c":false,\u005c"boost\u005c":1}}}}}" ;
+          value = "{\"bool\":{\"must\":{\"range\":" + "{\"" + value + "\":{\"from\":null," + "\"to\":\"" + i + "\",\"include_lower\":true,\"include_upper\":false,\"boost\":1}}}}}" ;
         break;
       case LESS_EQUAL:
         jj_consume_token(LESS_EQUAL);
         i = Primary();
-          value = "{\u005c"bool\u005c":{\u005c"must\u005c":{\u005c"range\u005c":" + "{\u005c"" + value + "\u005c":{\u005c"from\u005c":null," + "\u005c"to\u005c":\u005c"" + i + "\u005c"}}}}}" ;
+          value = "{\"bool\":{\"must\":{\"range\":" + "{\"" + value + "\":{\"from\":null," + "\"to\":\"" + i + "\"}}}}}" ;
         break;
       default:
         jj_la1[4] = jj_gen;
