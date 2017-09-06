@@ -21,19 +21,23 @@ public interface AdderConstants {
   /** RegularExpression Id. */
   int GREATER = 10;
   /** RegularExpression Id. */
-  int LESS = 11;
+  int GREATER_EQUAL = 11;
   /** RegularExpression Id. */
-  int OPEN_PAR = 12;
+  int LESS = 12;
   /** RegularExpression Id. */
-  int CLOSE_PAR = 13;
+  int LESS_EQUAL = 13;
   /** RegularExpression Id. */
-  int CHARACTER = 14;
+  int OPEN_PAR = 14;
   /** RegularExpression Id. */
-  int COLON = 15;
+  int CLOSE_PAR = 15;
   /** RegularExpression Id. */
-  int END = 16;
+  int CHARACTER = 16;
   /** RegularExpression Id. */
-  int STRING = 17;
+  int COLON = 17;
+  /** RegularExpression Id. */
+  int END = 18;
+  /** RegularExpression Id. */
+  int STRING = 19;
 
   /** Lexical state. */
   int DEFAULT = 0;
@@ -51,7 +55,9 @@ public interface AdderConstants {
     "\"=\"",
     "\"<>\"",
     "\">\"",
+    "\">=\"",
     "\"<\"",
+    "\"<=\"",
     "\"(\"",
     "\")\"",
     "<CHARACTER>",

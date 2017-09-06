@@ -36,7 +36,7 @@ public class Adder implements AdderConstants {
       previousValue = Result();
       jj_consume_token(END);
             printStream.println(previousValue);
-            printStream.println(esManager.query("{\"query\":"+previousValue+"}")) ;
+            printStream.println(esManager.query("{\u005c"query\u005c":"+previousValue+"}")) ;
     }
   }
 
@@ -44,7 +44,7 @@ public class Adder implements AdderConstants {
     String i ;
     String value ;
     value = ORW();
-      {if (true) return "{\"bool\":" + value + "}" ;}
+      {if (true) return "{\u005c"bool\u005c":" + value + "}" ;}
     throw new Error("Missing return statement in function");
   }
 
@@ -66,7 +66,7 @@ public class Adder implements AdderConstants {
       i = Expression();
           value += "," + i ;
     }
-      {if (true) return "{\"should\":[" + value + "]}";}
+      {if (true) return "{\u005c"should\u005c":[" + value + "]}";}
     throw new Error("Missing return statement in function");
   }
 
@@ -88,7 +88,7 @@ public class Adder implements AdderConstants {
       i = Demo();
           value = value + "," + i ;
     }
-      {if (true) return "{\"bool\":{\"must\":[" + value + "]}}" ;}
+      {if (true) return "{\u005c"bool\u005c":{\u005c"must\u005c":[" + value + "]}}" ;}
     throw new Error("Missing return statement in function");
   }
 
@@ -102,7 +102,9 @@ public class Adder implements AdderConstants {
       case EQUAL:
       case NOT:
       case GREATER:
+      case GREATER_EQUAL:
       case LESS:
+      case LESS_EQUAL:
       case COLON:
         ;
         break;
@@ -114,27 +116,37 @@ public class Adder implements AdderConstants {
       case NOT:
         jj_consume_token(NOT);
         i = Primary();
-          value = "{\"bool\":{\"must_not\":{\"term\":" + "{ \"" + value + "\": " + "\"" + i + "\"" + " }}}}" ;
+          value = "{\u005c"bool\u005c":{\u005c"must_not\u005c":{\u005c"term\u005c":" + "{ \u005c"" + value + "\u005c": " + "\u005c"" + i + "\u005c"" + " }}}}" ;
         break;
       case COLON:
         jj_consume_token(COLON);
         i = Primary();
-          value = "{\"bool\":{\"must\":{\"wildcard\":" + "{ \"" + value + "\": " + "\"" + i + "\"" + " }}}}" ;
+          value = "{\u005c"bool\u005c":{\u005c"must\u005c":{\u005c"wildcard\u005c":" + "{ \u005c"" + value + "\u005c": " + "\u005c"" + i + "\u005c"" + " }}}}" ;
         break;
       case EQUAL:
         jj_consume_token(EQUAL);
         i = Primary();
-          value = "{\"bool\":{\"must\":{\"term\":" + "{ \"" + value + "\": " + "\"" + i + "\"" + " }}}}" ;
+          value = "{\u005c"bool\u005c":{\u005c"must\u005c":{\u005c"term\u005c":" + "{ \u005c"" + value + "\u005c": " + "\u005c"" + i + "\u005c"" + " }}}}" ;
         break;
       case GREATER:
         jj_consume_token(GREATER);
         i = Primary();
-          value = "{\"bool\":{\"must\":{\"range\":" + "{\"" + value + "\":{\"from\":\"" + i + "\"," + "\"to\":null}}}}}" ;
+          value = "{\u005c"bool\u005c":{\u005c"must\u005c":{\u005c"range\u005c":" + "{\u005c"" + value + "\u005c":{\u005c"from\u005c":\u005c"" + i + "\u005c"," + "\u005c"to\u005c":null,\u005c"include_lower\u005c":false,\u005c"include_upper\u005c":true,\u005c"boost\u005c":1}}}}}" ;
+        break;
+      case GREATER_EQUAL:
+        jj_consume_token(GREATER_EQUAL);
+        i = Primary();
+          value = "{\u005c"bool\u005c":{\u005c"must\u005c":{\u005c"range\u005c":" + "{\u005c"" + value + "\u005c":{\u005c"from\u005c":\u005c"" + i + "\u005c"," + "\u005c"to\u005c":null}}}}}" ;
         break;
       case LESS:
         jj_consume_token(LESS);
         i = Primary();
-          value = "{\"bool\":{\"must\":{\"range\":" + "{\"" + value + "\":{\"from\":null," + "\"to\":\"" + i + "\"}}}}}" ;
+          value = "{\u005c"bool\u005c":{\u005c"must\u005c":{\u005c"range\u005c":" + "{\u005c"" + value + "\u005c":{\u005c"from\u005c":null," + "\u005c"to\u005c":\u005c"" + i + "\u005c",\u005c"include_lower\u005c":true,\u005c"include_upper\u005c":false,\u005c"boost\u005c":1}}}}}" ;
+        break;
+      case LESS_EQUAL:
+        jj_consume_token(LESS_EQUAL);
+        i = Primary();
+          value = "{\u005c"bool\u005c":{\u005c"must\u005c":{\u005c"range\u005c":" + "{\u005c"" + value + "\u005c":{\u005c"from\u005c":null," + "\u005c"to\u005c":\u005c"" + i + "\u005c"}}}}}" ;
         break;
       default:
         jj_la1[4] = jj_gen;
@@ -187,7 +199,7 @@ public class Adder implements AdderConstants {
       jj_la1_init_0();
    }
    private static void jj_la1_init_0() {
-      jj_la1_0 = new int[] {0x25000,0x80,0x40,0x8f00,0x8f00,0x25000,};
+      jj_la1_0 = new int[] {0x94000,0x80,0x40,0x23f00,0x23f00,0x94000,};
    }
 
   /** Constructor with InputStream. */
@@ -304,7 +316,7 @@ public class Adder implements AdderConstants {
   /** Generate ParseException. */
   public ParseException generateParseException() {
     jj_expentries.clear();
-    boolean[] la1tokens = new boolean[18];
+    boolean[] la1tokens = new boolean[20];
     if (jj_kind >= 0) {
       la1tokens[jj_kind] = true;
       jj_kind = -1;
@@ -318,7 +330,7 @@ public class Adder implements AdderConstants {
         }
       }
     }
-    for (int i = 0; i < 18; i++) {
+    for (int i = 0; i < 20; i++) {
       if (la1tokens[i]) {
         jj_expentry = new int[1];
         jj_expentry[0] = i;

@@ -31,7 +31,9 @@ TOKEN : { < OR : "or" > }
 TOKEN : { < EQUAL : "=" > }
 TOKEN : { < NOT : "<>" > }
 TOKEN : { < GREATER : ">" > }
+TOKEN : { < GREATER_EQUAL : ">=" > }
 TOKEN : { < LESS : "<" > }
+TOKEN : { < LESS_EQUAL : "<=" > }
 TOKEN : { < OPEN_PAR : "(" > }
 TOKEN : { < CLOSE_PAR : ")" > }
 TOKEN : { < CHARACTER : ["a"-"z","A"-"Z", "_"] (["a"-"z","A"-"Z","0"-"9","_"])* > }
@@ -109,9 +111,17 @@ String Demo() : {
         |
         <GREATER>
         i = Primary()
+        { value = "{\"bool\":{\"must\":{\"range\":" + "{\"" + value + "\":{\"from\":\"" + i + "\"," + "\"to\":null,\"include_lower\":false,\"include_upper\":true,\"boost\":1}}}}}" ; }
+        |
+        <GREATER_EQUAL>
+        i = Primary()
         { value = "{\"bool\":{\"must\":{\"range\":" + "{\"" + value + "\":{\"from\":\"" + i + "\"," + "\"to\":null}}}}}" ; }
         |
         <LESS>
+        i = Primary()
+        { value = "{\"bool\":{\"must\":{\"range\":" + "{\"" + value + "\":{\"from\":null," + "\"to\":\"" + i + "\",\"include_lower\":true,\"include_upper\":false,\"boost\":1}}}}}" ; }
+        |
+        <LESS_EQUAL>
         i = Primary()
         { value = "{\"bool\":{\"must\":{\"range\":" + "{\"" + value + "\":{\"from\":null," + "\"to\":\"" + i + "\"}}}}}" ; }
     )*
