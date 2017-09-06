@@ -30,31 +30,23 @@ TOKEN : { < AND : "and" > }
 TOKEN : { < OR : "or" > }
 TOKEN : { < EQUAL : "=" > }
 TOKEN : { < NOT : "<>" > }
+TOKEN : { < GREATER : ">" > }
+TOKEN : { < LESS : "<" > }
 TOKEN : { < OPEN_PAR : "(" > }
 TOKEN : { < CLOSE_PAR : ")" > }
 TOKEN : { < CHARACTER : ["a"-"z","A"-"Z", "_"] (["a"-"z","A"-"Z","0"-"9","_"])* > }
-TOKEN : { < COLON : ":" > }
+TOKEN : { < COLON : "_" > }
 TOKEN : { < END : ";" > }
-TOKEN : { <  STRING : "\""
-             ( ( ~["\"","\\","\n","\r"])
-             | ("\\" (
-                       ["n","t","v","b","r","f","a","\\","?","'","\""]
-                      |
-                       "0" (["0"-"7"])*
-                      |
-                       ["1"-"9"] (["0"-"9"])*
-                      |
-                       ("0x" | "0X") (["0"-"9","a"-"f","A"-"F"])+
-                     )
-               )
-             )*
-             "\"" > }
+TOKEN : { < STRING : (["a"-"z","A"-"Z","0"-"9",":","+","-","\u4E00"-"\u9FA5"])+ > }
 
 void start(EsManager esManager,PrintStream printStream) : {}
 {
     (
         previousValue = Result() <END>
-        { printStream.println(esManager.query("{\"query\":"+previousValue+"}")) ; }
+        {
+            printStream.println(previousValue);
+            printStream.println(esManager.query("{\"query\":"+previousValue+"}")) ;
+        }
     )*
 }
 
@@ -114,6 +106,14 @@ String Demo() : {
         <EQUAL>
         i = Primary()
         { value = "{\"bool\":{\"must\":{\"term\":" + "{ \"" + value + "\": " + "\"" + i + "\"" + " }}}}" ; }
+        |
+        <GREATER>
+        i = Primary()
+        { value = "{\"bool\":{\"must\":{\"range\":" + "{\"" + value + "\":{\"from\":\"" + i + "\"," + "\"to\":null}}}}}" ; }
+        |
+        <LESS>
+        i = Primary()
+        { value = "{\"bool\":{\"must\":{\"range\":" + "{\"" + value + "\":{\"from\":null," + "\"to\":\"" + i + "\"}}}}}" ; }
     )*
     { return value ; }
 }
