@@ -1,0 +1,100 @@
+options {
+ STATIC=false;
+}
+
+PARSER_BEGIN(Es)
+import java.io.PrintStream;
+import com.huacloud.es.Exp;
+import com.huacloud.es.Col;
+import com.huacloud.es.Cols;
+import com.huacloud.es.EsManager;
+import com.huacloud.es.EsManagerImpl;
+/** Simple brace matcher. */
+public class Es {
+
+  /** Main entry point. */
+  public static void main(String args[]) throws ParseException {
+    Es parser = new Es(System.in);
+    parser.start(System.out);
+  }
+
+}
+
+// Classes defining the Abstract Syntax Tree
+/**abstract class Exp {}
+class Col extends Exp {
+    String opt;
+    String property;
+    String value;
+    Col(String o,String p,String v) {opt=o;property=p;value =v;}
+    public String toString() {return "("+property+" "+opt+" "+value+")";}
+}
+class Cols extends Exp {
+    String op;
+    Exp left, right;
+    Cols(String o, Exp l, Exp r) {op = o; left = l; right = r;}
+    public String toString() {return "(" + op + " " + left + " " + right + ")";}
+}*/
+
+PARSER_END(Es)
+
+SKIP:  { " " | "\t" | "\n" | "\r" }
+TOKEN :{ "(" | ")"}
+TOKEN [IGNORE_CASE]: { <AND: "and"> | <OR: "or"> }
+TOKEN: { <#OP1: "="> | <#OP2: "!="> | <#OP3: ":"> | <#OP4: "<>"> | <#OP5: ">"> | <#OP6: "<"> |<#OP7:"<=">}
+TOKEN: {<OP: <OP1> | <OP2> | <OP3> | <OP4> | <OP5> | <OP6> | <OP7>>
+       |
+       <KEYSTRING: (["a"-"z","A"-"Z"])+>
+       |
+       <VALUESTRING:(["a"-"z","A"-"Z","0"-"9"])+>}
+TOKEN:{<END:";">}
+void start(PrintStream printStream):{Exp res;EsManager esManager;}{
+  (res=input(){printStream.println("result:"+res);esManager=new EsManagerImpl();esManager.query(res);})*
+}
+/** Root production. */
+ Exp input() :{Exp str;}
+{
+  str=parse() <END>
+  {return str;}
+}
+
+Exp parse() :{Exp str;Exp or;}
+{
+  str=parse_and()
+  (<OR> or=parse_and() {str=new Cols("or",str,or);})*
+  {return str;}
+}
+
+ Exp parse_and() :{Exp str; Exp and;}
+{
+  str=parse_kv() (<AND> and=parse_kv() { str=new Cols("and",str,and);})*
+  {return str;}
+}
+
+Exp parse_kv():{String key;String op;String value;Exp kv;}
+{
+    (key=parse_op()
+    op=parse_op()
+    value=parse_op()
+    {kv=new Col(op,key,value); {return kv;}}
+    )
+    |
+    "(" kv=parse() ")" {return kv;}
+}
+
+String parse_op():{Token n;}
+{
+    n=<KEYSTRING> {return n.image;}
+    |
+    n=<OP> {return n.image;}
+    |
+    n=<VALUESTRING> {return n.image;}
+}
+
+
+
+
+
+
+
+

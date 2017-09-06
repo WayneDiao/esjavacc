@@ -1,0 +1,134 @@
+options{
+    STATIC=false;
+}
+PARSER_BEGIN(Adder)
+import java.io.PrintStream;
+import com.huacloud.es.EsManager;
+import com.huacloud.es.impl.EsManagerImpl;
+public class Adder{
+    public static void main(String[] args) throws Exception,TokenMgrError{
+        while(true){
+          try{
+            Adder adder = new Adder(System.in);
+            EsManager esManager=new EsManagerImpl();
+            adder.start(esManager,System.out);
+            }catch(Exception e){
+              System.out.println("input error");
+              continue;
+            }catch(TokenMgrError e){
+              System.out.println("input error,please try again!");
+              continue;
+            }
+        }
+    }
+    String previousValue = null;
+}
+PARSER_END(Adder)
+SKIP:  { " " | "\t" | "\n" | "\r" }
+TOKEN : { < EOL : "\n" | "\r" | "\r\n" > }
+TOKEN : { < AND : "and" > }
+TOKEN : { < OR : "or" > }
+TOKEN : { < EQUAL : "=" > }
+TOKEN : { < NOT : "<>" > }
+TOKEN : { < OPEN_PAR : "(" > }
+TOKEN : { < CLOSE_PAR : ")" > }
+TOKEN : { < CHARACTER : ["a"-"z","A"-"Z", "_"] (["a"-"z","A"-"Z","0"-"9","_"])* > }
+TOKEN : { < COLON : ":" > }
+TOKEN : { < END : ";" > }
+TOKEN : { <  STRING : "\""
+             ( ( ~["\"","\\","\n","\r"])
+             | ("\\" (
+                       ["n","t","v","b","r","f","a","\\","?","'","\""]
+                      |
+                       "0" (["0"-"7"])*
+                      |
+                       ["1"-"9"] (["0"-"9"])*
+                      |
+                       ("0x" | "0X") (["0"-"9","a"-"f","A"-"F"])+
+                     )
+               )
+             )*
+             "\"" > }
+
+void start(EsManager esManager,PrintStream printStream) : {}
+{
+    (
+        previousValue = Result() <END>
+        { printStream.println(esManager.query("{\"query\":"+previousValue+"}")) ; }
+    )*
+}
+
+String Result() : {
+    String i ;
+    String value ;
+}
+{
+    value = ORW()
+    { return "{\"bool\":" + value + "}" ; }
+}
+
+
+String ORW() : {
+    String i ;
+    String value ;
+}
+{
+    value = Expression()
+    (
+        <OR>
+        i = Expression()
+        { value += "," + i ; }
+    )*
+    { return "{\"should\":[" + value + "]}"; }
+}
+
+String Expression() : {
+    String i ;
+    String value ;
+}
+{
+    value = Demo()
+    (
+        <AND>
+        i = Demo()
+        { value = value + "," + i ; }
+    )*
+    { return "{\"bool\":{\"must\":[" + value + "]}}" ; }
+}
+
+String Demo() : {
+    String i ;
+    String value ;
+}
+{
+    value = Primary()
+    (
+        <NOT>
+        i = Primary()
+        { value = "{\"bool\":{\"must_not\":{\"term\":" + "{ \"" + value + "\": " + "\"" + i + "\"" + " }}}}" ; }
+        |
+        <COLON>
+        i = Primary()
+        { value = "{\"bool\":{\"must\":{\"wildcard\":" + "{ \"" + value + "\": " + "\"" + i + "\"" + " }}}}" ; }
+        |
+        <EQUAL>
+        i = Primary()
+        { value = "{\"bool\":{\"must\":{\"term\":" + "{ \"" + value + "\": " + "\"" + i + "\"" + " }}}}" ; }
+    )*
+    { return value ; }
+}
+
+String Primary() : {
+    Token t ;
+    String d ;
+}
+{
+    t = <CHARACTER>
+    { return t.image ; }
+    |
+    t = <STRING>
+    { return t.image ; }
+    |
+    <OPEN_PAR> d = Result() <CLOSE_PAR>
+    { return d ; }
+}
