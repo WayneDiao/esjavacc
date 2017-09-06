@@ -49,7 +49,7 @@ public class BoolQueryImpl implements BoolQuery{
 
     private JSONObject getRange(Col left,Col right){
         JSONObject range=new JSONObject();
-        range.put(left.getProperty(),"");
+        range.put(left.getProperty(),left.getValue());
         return range;
     }
 
