@@ -1,17 +1,19 @@
 options{
     STATIC=false;
 }
-PARSER_BEGIN(Adder)
+PARSER_BEGIN(ParseCondition)
 import java.io.PrintStream;
 import com.huacloud.es.EsManager;
 import com.huacloud.es.impl.EsManagerImpl;
-public class Adder{
+import com.huacloud.es.utils.DateTimeUtil;
+import org.apache.commons.lang3.math.NumberUtils;
+public class ParseCondition{
     public static void main(String[] args) throws Exception,TokenMgrError{
         while(true){
           try{
-            Adder adder = new Adder(System.in);
+            ParseCondition parseCondition = new ParseCondition(System.in);
             EsManager esManager=new EsManagerImpl();
-            adder.start(esManager,System.out);
+            parseCondition.start(esManager,System.out);
             }catch(Exception e){
               System.out.println("input error");
               continue;
@@ -23,7 +25,7 @@ public class Adder{
     }
     String previousValue = null;
 }
-PARSER_END(Adder)
+PARSER_END(ParseCondition)
 SKIP:  { " " | "\t" | "\n" | "\r" }
 TOKEN : { < EOL : "\n" | "\r" | "\r\n" > }
 TOKEN : { < AND : "and" > }
@@ -37,7 +39,7 @@ TOKEN : { < LESS_EQUAL : "<=" > }
 TOKEN : { < OPEN_PAR : "(" > }
 TOKEN : { < CLOSE_PAR : ")" > }
 TOKEN : { < CHARACTER : ["a"-"z","A"-"Z", "_"] (["a"-"z","A"-"Z","0"-"9","_"])* > }
-TOKEN : { < COLON : "_" > }
+TOKEN : { < COLON : "%" > }
 TOKEN : { < END : ";" > }
 TOKEN : { < STRING : (["a"-"z","A"-"Z","0"-"9",":","+","-","\u4E00"-"\u9FA5"])+ > }
 
@@ -46,7 +48,7 @@ void start(EsManager esManager,PrintStream printStream) : {}
     (
         previousValue = Result() <END>
         {
-            printStream.println("{\"query\":"+previousValue+"}");
+            printStream.println("{\"query\":"+previousValue+"}") ;
             printStream.println(esManager.query("{\"query\":"+previousValue+"}")) ;
         }
     )*
@@ -57,40 +59,40 @@ String Result() : {
     String value ;
 }
 {
-    value = ORW()
+    value = Or()
     { return "{\"bool\":" + value + "}" ; }
 }
 
 
-String ORW() : {
+String Or() : {
     String i ;
     String value ;
 }
 {
-    value = Expression()
+    value = And()
     (
         <OR>
-        i = Expression()
+        i = And()
         { value += "," + i ; }
     )*
     { return "{\"should\":[" + value + "]}"; }
 }
 
-String Expression() : {
+String And() : {
     String i ;
     String value ;
 }
 {
-    value = Demo()
+    value = Condition()
     (
         <AND>
-        i = Demo()
+        i = Condition()
         { value = value + "," + i ; }
     )*
     { return "{\"bool\":{\"must\":[" + value + "]}}" ; }
 }
 
-String Demo() : {
+String Condition() : {
     String i ;
     String value ;
 }
@@ -99,31 +101,65 @@ String Demo() : {
     (
         <NOT>
         i = Primary()
-        { value = "{\"bool\":{\"must_not\":{\"term\":" + "{ \"" + value + "\": " + "\"" + i + "\"" + " }}}}" ; }
+        {
+            value = "{\"bool\":{\"must_not\":{\"term\":" + "{ \"" + value + "\": " + "\"" + i + "\"" + " }}}}" ;
+        }
         |
         <COLON>
         i = Primary()
-        { value = "{\"bool\":{\"must\":{\"wildcard\":" + "{ \"" + value + "\": " + "\"" + i + "\"" + " }}}}" ; }
+        {
+            value = "{\"bool\":{\"must\":{\"wildcard\":" + "{ \"" + value + "\": " + "\"" + i + "\"" + " }}}}" ;
+        }
         |
         <EQUAL>
         i = Primary()
-        { value = "{\"bool\":{\"must\":{\"term\":" + "{ \"" + value + "\": " + "\"" + i + "\"" + " }}}}" ; }
+        {
+            if(NumberUtils.isDigits(i) || DateTimeUtil.isTime(i)) {
+                value = "{\"bool\":{\"filter\":{\"term\":" + "{ \"" + value + "\": " + "\"" + i + "\"" + " }}}}" ;
+            } else {
+                value = "{\"bool\":{\"must\":{\"term\":" + "{ \"" + value + "\": " + "\"" + i + "\"" + " }}}}" ;
+            }
+        }
         |
         <GREATER>
         i = Primary()
-        { value = "{\"bool\":{\"must\":{\"range\":" + "{\"" + value + "\":{\"from\":\"" + i + "\"," + "\"to\":null,\"include_lower\":false,\"include_upper\":true,\"boost\":1}}}}}" ; }
+        {
+            if(NumberUtils.isDigits(i) || DateTimeUtil.isTime(i)) {
+                value = "{\"bool\":{\"filter\":{\"range\":" + "{\"" + value + "\":{\"from\":\"" + i + "\"," + "\"to\":null,\"include_lower\":false,\"include_upper\":true,\"boost\":1}}}}}" ;
+            } else {
+                value = "{\"bool\":{\"must\":{\"range\":" + "{\"" + value + "\":{\"from\":\"" + i + "\"," + "\"to\":null,\"include_lower\":false,\"include_upper\":true,\"boost\":1}}}}}" ;
+            }
+        }
         |
         <GREATER_EQUAL>
         i = Primary()
-        { value = "{\"bool\":{\"must\":{\"range\":" + "{\"" + value + "\":{\"from\":\"" + i + "\"," + "\"to\":null}}}}}" ; }
+        {
+            if(NumberUtils.isDigits(i) || DateTimeUtil.isTime(i)) {
+                value = "{\"bool\":{\"filter\":{\"range\":" + "{\"" + value + "\":{\"from\":\"" + i + "\"," + "\"to\":null}}}}}" ;
+            } else {
+                value = "{\"bool\":{\"must\":{\"range\":" + "{\"" + value + "\":{\"from\":\"" + i + "\"," + "\"to\":null}}}}}" ;
+            }
+        }
         |
         <LESS>
         i = Primary()
-        { value = "{\"bool\":{\"must\":{\"range\":" + "{\"" + value + "\":{\"from\":null," + "\"to\":\"" + i + "\",\"include_lower\":true,\"include_upper\":false,\"boost\":1}}}}}" ; }
+        {
+            if(NumberUtils.isDigits(i) || DateTimeUtil.isTime(i)) {
+                value = "{\"bool\":{\"filter\":{\"range\":" + "{\"" + value + "\":{\"from\":null," + "\"to\":\"" + i + "\",\"include_lower\":true,\"include_upper\":false,\"boost\":1}}}}}" ;
+            } else {
+                value = "{\"bool\":{\"must\":{\"range\":" + "{\"" + value + "\":{\"from\":null," + "\"to\":\"" + i + "\",\"include_lower\":true,\"include_upper\":false,\"boost\":1}}}}}" ;
+            }
+        }
         |
         <LESS_EQUAL>
         i = Primary()
-        { value = "{\"bool\":{\"must\":{\"range\":" + "{\"" + value + "\":{\"from\":null," + "\"to\":\"" + i + "\"}}}}}" ; }
+        {
+            if(NumberUtils.isDigits(i) || DateTimeUtil.isTime(i)) {
+                value = "{\"bool\":{\"filter\":{\"range\":" + "{\"" + value + "\":{\"from\":null," + "\"to\":\"" + i + "\"}}}}}" ;
+            } else {
+                value = "{\"bool\":{\"must\":{\"range\":" + "{\"" + value + "\":{\"from\":null," + "\"to\":\"" + i + "\"}}}}}" ;
+            }
+        }
     )*
     { return value ; }
 }
