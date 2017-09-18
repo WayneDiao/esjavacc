@@ -8,6 +8,6 @@ cd esjavacc/src/main/java
 javacc es.jj
 
 javac *.java
-java Adder.class
+java ParseCondition.class
 
 

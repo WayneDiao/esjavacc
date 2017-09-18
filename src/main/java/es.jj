@@ -10,23 +10,23 @@ import org.apache.commons.lang3.math.NumberUtils;
 public class ParseCondition{
     public static void main(String[] args) throws Exception,TokenMgrError{
         while(true){
-          try{
-            ParseCondition parseCondition = new ParseCondition(System.in);
-            EsManager esManager=new EsManagerImpl();
-            parseCondition.start(esManager,System.out);
-            }catch(Exception e){
-              System.out.println("input error");
-              continue;
-            }catch(TokenMgrError e){
-              System.out.println("input error,please try again!");
-              continue;
+            try{
+                ParseCondition parseCondition = new ParseCondition(System.in);
+                EsManager esManager=new EsManagerImpl();
+                parseCondition.start(esManager,System.out);
+            } catch (Exception e){
+                System.out.println("input error");
+                continue;
+            } catch (TokenMgrError e){
+                System.out.println("input error,please try again!");
+                continue;
             }
         }
     }
     String previousValue = null;
 }
 PARSER_END(ParseCondition)
-SKIP:  { " " | "\t" | "\n" | "\r" }
+SKIP  : { " " | "\t" | "\n" | "\r" }
 TOKEN : { < EOL : "\n" | "\r" | "\r\n" > }
 TOKEN : { < AND : "and" > }
 TOKEN : { < OR : "or" > }
