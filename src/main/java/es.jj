@@ -39,7 +39,7 @@ TOKEN : { < LESS_EQUAL : "<=" > }
 TOKEN : { < OPEN_PAR : "(" > }
 TOKEN : { < CLOSE_PAR : ")" > }
 TOKEN : { < CHARACTER : ["a"-"z","A"-"Z", "_"] (["a"-"z","A"-"Z","0"-"9","_"])* > }
-TOKEN : { < COLON : "%" > }
+TOKEN : { < LIKE : "%" > }
 TOKEN : { < END : ";" > }
 TOKEN : { < STRING : (["a"-"z","A"-"Z","0"-"9",":","+","-","\u4E00"-"\u9FA5"])+ > }
 
@@ -98,26 +98,27 @@ String Condition() : {
 }
 {
     value = Primary()
+    {int num = getBoost(value);}
     (
         <NOT>
         i = Primary()
         {
-            value = "{\"bool\":{\"must_not\":{\"term\":" + "{ \"" + value + "\": " + "\"" + i + "\"" + " }}}}" ;
+            value = "{\"bool\":{\"must_not\":{\"term\":" + "{ \"" + value + "\": " + "\"" + i + "\"" + " }},\"boost\":"+num+"}}" ;
         }
         |
-        <COLON>
+        <LIKE>
         i = Primary()
         {
-            value = "{\"bool\":{\"must\":{\"wildcard\":" + "{ \"" + value + "\": " + "\"" + i + "\"" + " }}}}" ;
+            value = "{\"bool\":{\"must\":{\"wildcard\":" + "{ \"" + value + "\": " + "\"" + i + "\"" + " }},\"boost\":"+num+"}}" ;
         }
         |
         <EQUAL>
         i = Primary()
         {
             if(NumberUtils.isDigits(i) || DateTimeUtil.isTime(i)) {
-                value = "{\"bool\":{\"filter\":{\"term\":" + "{ \"" + value + "\": " + "\"" + i + "\"" + " }}}}" ;
+                value = "{\"bool\":{\"filter\":{\"term\":" + "{ \"" + value + "\": " + "\"" + i + "\"" + " }},\"boost\":"+num+"}}" ;
             } else {
-                value = "{\"bool\":{\"must\":{\"term\":" + "{ \"" + value + "\": " + "\"" + i + "\"" + " }}}}" ;
+                value = "{\"bool\":{\"must\":{\"term\":" + "{ \"" + value + "\": " + "\"" + i + "\"" + " }},\"boost\":"+num+"}}" ;
             }
         }
         |
@@ -125,9 +126,9 @@ String Condition() : {
         i = Primary()
         {
             if(NumberUtils.isDigits(i) || DateTimeUtil.isTime(i)) {
-                value = "{\"bool\":{\"filter\":{\"range\":" + "{\"" + value + "\":{\"from\":\"" + i + "\"," + "\"to\":null,\"include_lower\":false,\"include_upper\":true,\"boost\":1}}}}}" ;
+                value = "{\"bool\":{\"filter\":{\"range\":" + "{\"" + value + "\":{\"from\":\"" + i + "\"," + "\"to\":null,\"include_lower\":false,\"include_upper\":true,\"boost\":"+num+"}}}}}" ;
             } else {
-                value = "{\"bool\":{\"must\":{\"range\":" + "{\"" + value + "\":{\"from\":\"" + i + "\"," + "\"to\":null,\"include_lower\":false,\"include_upper\":true,\"boost\":1}}}}}" ;
+                value = "{\"bool\":{\"must\":{\"range\":" + "{\"" + value + "\":{\"from\":\"" + i + "\"," + "\"to\":null,\"include_lower\":false,\"include_upper\":true,\"boost\":"+num+"}}}}}" ;
             }
         }
         |
@@ -135,9 +136,9 @@ String Condition() : {
         i = Primary()
         {
             if(NumberUtils.isDigits(i) || DateTimeUtil.isTime(i)) {
-                value = "{\"bool\":{\"filter\":{\"range\":" + "{\"" + value + "\":{\"from\":\"" + i + "\"," + "\"to\":null}}}}}" ;
+                value = "{\"bool\":{\"filter\":{\"range\":" + "{\"" + value + "\":{\"from\":\"" + i + "\"," + "\"to\":null,\"boost\":"+num+"}}}}}" ;
             } else {
-                value = "{\"bool\":{\"must\":{\"range\":" + "{\"" + value + "\":{\"from\":\"" + i + "\"," + "\"to\":null}}}}}" ;
+                value = "{\"bool\":{\"must\":{\"range\":" + "{\"" + value + "\":{\"from\":\"" + i + "\"," + "\"to\":null,\"boost\":"+num+"}}}}}" ;
             }
         }
         |
@@ -145,9 +146,9 @@ String Condition() : {
         i = Primary()
         {
             if(NumberUtils.isDigits(i) || DateTimeUtil.isTime(i)) {
-                value = "{\"bool\":{\"filter\":{\"range\":" + "{\"" + value + "\":{\"from\":null," + "\"to\":\"" + i + "\",\"include_lower\":true,\"include_upper\":false,\"boost\":1}}}}}" ;
+                value = "{\"bool\":{\"filter\":{\"range\":" + "{\"" + value + "\":{\"from\":null," + "\"to\":\"" + i + "\",\"include_lower\":true,\"include_upper\":false,\"boost\":"+num+"}}}}}" ;
             } else {
-                value = "{\"bool\":{\"must\":{\"range\":" + "{\"" + value + "\":{\"from\":null," + "\"to\":\"" + i + "\",\"include_lower\":true,\"include_upper\":false,\"boost\":1}}}}}" ;
+                value = "{\"bool\":{\"must\":{\"range\":" + "{\"" + value + "\":{\"from\":null," + "\"to\":\"" + i + "\",\"include_lower\":true,\"include_upper\":false,\"boost\":"+num+"}}}}}" ;
             }
         }
         |
@@ -155,9 +156,9 @@ String Condition() : {
         i = Primary()
         {
             if(NumberUtils.isDigits(i) || DateTimeUtil.isTime(i)) {
-                value = "{\"bool\":{\"filter\":{\"range\":" + "{\"" + value + "\":{\"from\":null," + "\"to\":\"" + i + "\"}}}}}" ;
+                value = "{\"bool\":{\"filter\":{\"range\":" + "{\"" + value + "\":{\"from\":null," + "\"to\":\"" + i + "\",\"boost\":"+num+"}}}}}" ;
             } else {
-                value = "{\"bool\":{\"must\":{\"range\":" + "{\"" + value + "\":{\"from\":null," + "\"to\":\"" + i + "\"}}}}}" ;
+                value = "{\"bool\":{\"must\":{\"range\":" + "{\"" + value + "\":{\"from\":null," + "\"to\":\"" + i + "\",\"boost\":"+num+"}}}}}" ;
             }
         }
     )*

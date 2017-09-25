@@ -98,6 +98,7 @@ public class ParseCondition implements ParseConditionConstants {
     String i ;
     String value ;
     value = Primary();
+     int num = 1;
     label_4:
     while (true) {
       switch ((jj_ntk==-1)?jj_ntk():jj_ntk) {
@@ -107,7 +108,7 @@ public class ParseCondition implements ParseConditionConstants {
       case GREATER_EQUAL:
       case LESS:
       case LESS_EQUAL:
-      case COLON:
+      case LIKE:
         ;
         break;
       default:
@@ -118,56 +119,56 @@ public class ParseCondition implements ParseConditionConstants {
       case NOT:
         jj_consume_token(NOT);
         i = Primary();
-            value = "{\"bool\":{\"must_not\":{\"term\":" + "{ \"" + value + "\": " + "\"" + i + "\"" + " }}}}" ;
+            value = "{\"bool\":{\"must_not\":{\"term\":" + "{ \"" + value + "\": " + "\"" + i + "\"" + " }},\"boost\":"+num+"}}" ;
         break;
-      case COLON:
-        jj_consume_token(COLON);
+      case LIKE:
+        jj_consume_token(LIKE);
         i = Primary();
-            value = "{\"bool\":{\"must\":{\"wildcard\":" + "{ \"" + value + "\": " + "\"" + i + "\"" + " }}}}" ;
+            value = "{\"bool\":{\"must\":{\"wildcard\":" + "{ \"" + value + "\": " + "\"" + i + "\"" + " }},\"boost\":"+num+"}}" ;
         break;
       case EQUAL:
         jj_consume_token(EQUAL);
         i = Primary();
             if(NumberUtils.isDigits(i) || DateTimeUtil.isTime(i)) {
-                value = "{\"bool\":{\"filter\":{\"term\":" + "{ \"" + value + "\": " + "\"" + i + "\"" + " }}}}" ;
+                value = "{\"bool\":{\"filter\":{\"term\":" + "{ \"" + value + "\": " + "\"" + i + "\"" + " }},\"boost\":"+num+"}}" ;
             } else {
-                value = "{\"bool\":{\"must\":{\"term\":" + "{ \"" + value + "\": " + "\"" + i + "\"" + " }}}}" ;
+                value = "{\"bool\":{\"must\":{\"term\":" + "{ \"" + value + "\": " + "\"" + i + "\"" + " }},\"boost\":"+num+"}}" ;
             }
         break;
       case GREATER:
         jj_consume_token(GREATER);
         i = Primary();
             if(NumberUtils.isDigits(i) || DateTimeUtil.isTime(i)) {
-                value = "{\"bool\":{\"filter\":{\"range\":" + "{\"" + value + "\":{\"from\":\"" + i + "\"," + "\"to\":null,\"include_lower\":false,\"include_upper\":true,\"boost\":1}}}}}" ;
+                value = "{\"bool\":{\"filter\":{\"range\":" + "{\"" + value + "\":{\"from\":\"" + i + "\"," + "\"to\":null,\"include_lower\":false,\"include_upper\":true,\"boost\":"+num+"}}}}}" ;
             } else {
-                value = "{\"bool\":{\"must\":{\"range\":" + "{\"" + value + "\":{\"from\":\"" + i + "\"," + "\"to\":null,\"include_lower\":false,\"include_upper\":true,\"boost\":1}}}}}" ;
+                value = "{\"bool\":{\"must\":{\"range\":" + "{\"" + value + "\":{\"from\":\"" + i + "\"," + "\"to\":null,\"include_lower\":false,\"include_upper\":true,\"boost\":"+num+"}}}}}" ;
             }
         break;
       case GREATER_EQUAL:
         jj_consume_token(GREATER_EQUAL);
         i = Primary();
             if(NumberUtils.isDigits(i) || DateTimeUtil.isTime(i)) {
-                value = "{\"bool\":{\"filter\":{\"range\":" + "{\"" + value + "\":{\"from\":\"" + i + "\"," + "\"to\":null}}}}}" ;
+                value = "{\"bool\":{\"filter\":{\"range\":" + "{\"" + value + "\":{\"from\":\"" + i + "\"," + "\"to\":null,\"boost\":"+num+"}}}}}" ;
             } else {
-                value = "{\"bool\":{\"must\":{\"range\":" + "{\"" + value + "\":{\"from\":\"" + i + "\"," + "\"to\":null}}}}}" ;
+                value = "{\"bool\":{\"must\":{\"range\":" + "{\"" + value + "\":{\"from\":\"" + i + "\"," + "\"to\":null,\"boost\":"+num+"}}}}}" ;
             }
         break;
       case LESS:
         jj_consume_token(LESS);
         i = Primary();
             if(NumberUtils.isDigits(i) || DateTimeUtil.isTime(i)) {
-                value = "{\"bool\":{\"filter\":{\"range\":" + "{\"" + value + "\":{\"from\":null," + "\"to\":\"" + i + "\",\"include_lower\":true,\"include_upper\":false,\"boost\":1}}}}}" ;
+                value = "{\"bool\":{\"filter\":{\"range\":" + "{\"" + value + "\":{\"from\":null," + "\"to\":\"" + i + "\",\"include_lower\":true,\"include_upper\":false,\"boost\":"+num+"}}}}}" ;
             } else {
-                value = "{\"bool\":{\"must\":{\"range\":" + "{\"" + value + "\":{\"from\":null," + "\"to\":\"" + i + "\",\"include_lower\":true,\"include_upper\":false,\"boost\":1}}}}}" ;
+                value = "{\"bool\":{\"must\":{\"range\":" + "{\"" + value + "\":{\"from\":null," + "\"to\":\"" + i + "\",\"include_lower\":true,\"include_upper\":false,\"boost\":"+num+"}}}}}" ;
             }
         break;
       case LESS_EQUAL:
         jj_consume_token(LESS_EQUAL);
         i = Primary();
             if(NumberUtils.isDigits(i) || DateTimeUtil.isTime(i)) {
-                value = "{\"bool\":{\"filter\":{\"range\":" + "{\"" + value + "\":{\"from\":null," + "\"to\":\"" + i + "\"}}}}}" ;
+                value = "{\"bool\":{\"filter\":{\"range\":" + "{\"" + value + "\":{\"from\":null," + "\"to\":\"" + i + "\",\"boost\":"+num+"}}}}}" ;
             } else {
-                value = "{\"bool\":{\"must\":{\"range\":" + "{\"" + value + "\":{\"from\":null," + "\"to\":\"" + i + "\"}}}}}" ;
+                value = "{\"bool\":{\"must\":{\"range\":" + "{\"" + value + "\":{\"from\":null," + "\"to\":\"" + i + "\",\"boost\":"+num+"}}}}}" ;
             }
         break;
       default:

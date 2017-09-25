@@ -33,7 +33,7 @@ public interface ParseConditionConstants {
   /** RegularExpression Id. */
   int CHARACTER = 16;
   /** RegularExpression Id. */
-  int COLON = 17;
+  int LIKE = 17;
   /** RegularExpression Id. */
   int END = 18;
   /** RegularExpression Id. */
